@@ -27,6 +27,14 @@ public class HtmlHelper {
         String _head = viewbagBuilder(_viewbag);
         _htmlcode.append(_head);
         _htmlcode.append(_body);
+        if (_ws.length() > 0) {
+           
+            _htmlcode.append("<script>").append("\n");   
+            _htmlcode.append("$(document).ready(function() {").append("\n");               
+            _htmlcode.append("b4j_connect('" + _ws + "');").append("\n");   
+            _htmlcode.append("});").append("\n");   
+            _htmlcode.append("</script>").append("\n");   
+        }
         _htmlcode.append("</body></html>");
         return _htmlcode.toString();
     }
@@ -97,20 +105,16 @@ public class HtmlHelper {
 
         if (_viewbag.Script.length > 0) {
             for (String script : _viewbag.Script) {
-                rs.append("<script type='text/javascript' src='" + script + "'/>").append("\n");   
+                rs.append("<script type='text/javascript' src='" + script + "'>").append("</script> \n");   
             }            
         }
-
-        if (_ws.length() > 0) {
-           
-            rs.append("<script>").append("\n");   
-            rs.append("$(document).ready(function() {").append("\n");   
-            rs.append("b4j_connect('" + _ws + "');").append("\n");   
-            rs.append("});").append("\n");   
-            rs.append("</script>").append("\n");   
-        }
-
+        
         rs.append("</head><body>");
-        return rs.toString();
+        
+        String kq = rs.toString();
+
+        kq = kq.replaceAll("'", "\"");
+
+        return kq;
     }
 }   
