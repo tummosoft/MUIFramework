@@ -20,7 +20,6 @@ public class FormEvents {
     public Boolean onselect = false;	//script	Fires after some text has been selected in an element
     public Boolean onsubmit = false;	
     HtmlForm _hmtlForm;
-    StringBuilder build;
 
     public FormEvents() {
        
@@ -28,7 +27,6 @@ public class FormEvents {
 
     public FormEvents(HtmlForm hmtlForm) {
         _hmtlForm = hmtlForm;
-        build = new StringBuilder();
     }
 
     public String[] getHTML() {    
@@ -36,7 +34,7 @@ public class FormEvents {
         String event = "";
         String script = "";
         String eventname = _hmtlForm.getEventName();
-       
+        StringBuilder build = new StringBuilder();
         String temp = "";
 
         if (onblur == true) {            
@@ -67,7 +65,7 @@ public class FormEvents {
             + "b4j_raiseEvent('" + ev + "', {id:14}) \n"
             + "} \n";
             build.append(temp);
-            BA.Log(ev + "(Params As Map)");
+            BA.Log(ev + "(res as map)");
             
         }
         if (onfocus == true) {            
@@ -78,7 +76,7 @@ public class FormEvents {
             + "b4j_raiseEvent('" + ev + "', {id:14}) \n"
             + "} \n";
             build.append(temp);
-            BA.Log(ev + "(Params As Map)");
+            BA.Log(ev + "(res as map)");
         }
         if (oninvalid == true) {
              
@@ -89,7 +87,7 @@ public class FormEvents {
              + "b4j_raiseEvent('" + ev + "', {id:14}) \n"
              + "} \n";
              build.append(temp);
-             BA.Log(ev + "(Params As Map)");
+             BA.Log(ev + "(res as map)");
         }
         if (onreset == true) {            
             script = eventname + "_onreset(this)";
@@ -99,7 +97,7 @@ public class FormEvents {
             + "b4j_raiseEvent('" + ev + "', {id:14}) \n"
             + "} \n";
             build.append(temp);
-            BA.Log(ev + "(Params As Map)");
+            BA.Log(ev + "(res as map)");
         }
         if (onsearch == true) {
             
@@ -110,7 +108,7 @@ public class FormEvents {
             + "b4j_raiseEvent('" + ev + "', {id:14}) \n"
             + "} \n";
             build.append(temp);
-            BA.Log(ev + "(Params As Map)");
+            BA.Log(ev + "(res as map)");
         }
         if (onselect == true) {
             
@@ -121,7 +119,7 @@ public class FormEvents {
             + "b4j_raiseEvent('" + ev + "', {id:14}) \n"
             + "} \n";
             build.append(temp);
-            BA.Log(ev + "(Params As Map)");
+            BA.Log(ev + "(res as map)");
         }
         if (onsubmit == true) {            
             script = eventname + "_onsubmit(this)";
@@ -132,7 +130,7 @@ public class FormEvents {
             + "b4j_raiseEvent('" + ev + "', {id:14}) \n"
             + "} \n";
             build.append(temp);
-            BA.Log(ev + "(Params As Map)");
+            BA.Log(ev + "(res as map)");
         } 
         
         if (oninput == true) {            
@@ -144,7 +142,7 @@ public class FormEvents {
             + "b4j_raiseEvent('" + ev + "', {id:14}) \n"
             + "} \n";
             build.append(temp);
-            BA.Log(ev + "(Params As Map)");
+            BA.Log(ev + "(res as map)");
         } 
 
         
