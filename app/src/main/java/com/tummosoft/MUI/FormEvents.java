@@ -1,5 +1,6 @@
 package com.tummosoft.MUI;
 
+import anywheresoftware.b4a.objects.collections.*;
 import anywheresoftware.b4a.AbsObjectWrapper;
 import anywheresoftware.b4a.BA;
 import anywheresoftware.b4a.BA.DependsOn;
@@ -20,140 +21,38 @@ public class FormEvents {
     public Boolean onselect = false;	//script	Fires after some text has been selected in an element
     public Boolean onsubmit = false;	
     HtmlForm _hmtlForm;
+    public Map overrideEvent;
 
     public FormEvents() {
        
     }
 
-    public FormEvents(HtmlForm hmtlForm) {
-        _hmtlForm = hmtlForm;
+    public FormEvents(HtmlForm hmtlForm, Map customEvent) {
+        _hmtlForm = hmtlForm;         
+        overrideEvent = new Map();
     }
 
-    public String[] getHTML() {    
-        String [] rs = new String [2];  
+    public String getHTML() {    
         String event = "";
         String script = "";
-        String eventname = _hmtlForm.getEventName();
+        String ev =  _hmtlForm.id;
         StringBuilder build = new StringBuilder();
         String temp = "";
-
+        Map customEvent = _hmtlForm.OverrideEvent;
         if (onblur == true) {            
-            script = eventname + "_onblur(this)";
-            event = event + " onblur='" + script + "'";
-            String ev = script.substring(0, script.length() - 6);
-            temp = "function " + ev + "(e) { \n"
-            + "b4j_raiseEvent('" + ev + "', {id:14}) \n"
-            + "} \n";
-            build.append(temp);
-            BA.Log(ev + "(res as map)");
-        }
-        if (onchange == true) {             
-             script = eventname + "_onchange(this)";
-             event = event + " onchange='" + script + "'";
-             String ev = script.substring(0, script.length() - 6);
-             temp = "function " + ev + "(e) { \n"
-            + "b4j_raiseEvent('" + ev + "', {id:14}) \n"
-            + "} \n";
-            build.append(temp);
-            BA.Log(ev + "(res as map)");
-        }
-        if (oncontextmenu == true) {
-            script = eventname + "_oncontextmenu(this)";
-            event =  event + " oncontextmenu='" + script + "'";
-            String ev = script.substring(0, script.length() - 6);
-            temp = "function " + ev + "(e) { \n"
-            + "b4j_raiseEvent('" + ev + "', {id:14}) \n"
-            + "} \n";
-            build.append(temp);
-            BA.Log(ev + "(res as map)");
-            
-        }
-        if (onfocus == true) {            
-            script = eventname + "_onfocus(this)";
-            event = event + " onfocus='" + script + "'";
-            String ev = script.substring(0, script.length() - 6);
-            temp = "function " + ev + "(e) { \n"
-            + "b4j_raiseEvent('" + ev + "', {id:14}) \n"
-            + "} \n";
-            build.append(temp);
-            BA.Log(ev + "(res as map)");
-        }
-        if (oninvalid == true) {
-             
-             script = eventname + "_oninvalid(this)";
-             event = event + " oninvalid='" + script + "'";
-             String ev = script.substring(0, script.length() - 6);
-             temp = "function " + ev + "(e) { \n"
-             + "b4j_raiseEvent('" + ev + "', {id:14}) \n"
-             + "} \n";
-             build.append(temp);
-             BA.Log(ev + "(res as map)");
-        }
-        if (onreset == true) {            
-            script = eventname + "_onreset(this)";
-            event = event + " onreset='";
-            String ev = script.substring(0, script.length() - 6);
-            temp = "function " + ev + "(e) { \n"
-            + "b4j_raiseEvent('" + ev + "', {id:14}) \n"
-            + "} \n";
-            build.append(temp);
-            BA.Log(ev + "(res as map)");
-        }
-        if (onsearch == true) {
-            
-            script = eventname + "_onsearch(this)";
-            event = event + " onsearch='" + script + "'";
-            String ev = script.substring(0, script.length() - 6);
-            temp = "function " + ev + "(e) { \n"
-            + "b4j_raiseEvent('" + ev + "', {id:14}) \n"
-            + "} \n";
-            build.append(temp);
-            BA.Log(ev + "(res as map)");
-        }
-        if (onselect == true) {
-            
-            script = eventname + "_onselect(this)";
-            event = event + " onselect='" + script + "'";
-            String ev = script.substring(0, script.length() - 6);
-            temp = "function " + ev + "(e) { \n"
-            + "b4j_raiseEvent('" + ev + "', {id:14}) \n"
-            + "} \n";
-            build.append(temp);
-            BA.Log(ev + "(res as map)");
-        }
-        if (onsubmit == true) {            
-            script = eventname + "_onsubmit(this)";
-            BA.Log("");
-            event = event + " onsubmit='" + script + "'";	
-            String ev = script.substring(0, script.length() - 6);
-            temp = "function " + ev + "(e) { \n"
-            + "b4j_raiseEvent('" + ev + "', {id:14}) \n"
-            + "} \n";
-            build.append(temp);
-            BA.Log(ev + "(res as map)");
-        } 
-        
-        if (oninput == true) {            
-            script = eventname + "_oninput(this)";
-            BA.Log("");
-            event = event + " oninput='" + script + "'";	
-            String ev = script.substring(0, script.length() - 6);
-            temp = "function " + ev + "(e) { \n"
-            + "b4j_raiseEvent('" + ev + "', {id:14}) \n"
-            + "} \n";
-            build.append(temp);
-            BA.Log(ev + "(res as map)");
-        } 
+            temp = "$('#" + ev + "').blur(function(event) {  \n"
+                + customEvent.Get("onblur") + "\n"                
+                + "});\n ";
 
-        
-        String script_event = "<script>"
-        + build.toString()
+            build.append(temp);
+        }
+
+                        
+        String script_event = "<script> \n"
+        + build.toString() + "\n"
         + "</script> \n";
-
-        rs[0] = event;
-        rs[1] = script_event;
         
         
-        return rs;
+        return script_event;
     }
 }

@@ -50,14 +50,14 @@ public class ControlEvents {
                 + "});\n ";
 
             build.append(temp);
-            BA.Log( _hmtlControl.Name + "_onkeydown(Params As Map)");
-        } else if (onkeypress == true) {            
+        }
+
+        if (onkeypress == true) {            
             temp = "$('#" + ev + "').keypress(function(event) {  \n"
                 + customEvent.Get("onkeypress") + "\n"                
                 + "}); \n";
-
             build.append(temp);
-            BA.Log( _hmtlControl.Name + "_onkeypress(Params As Map)"); 
+        
         }
                 
         String script_event = "<script>"

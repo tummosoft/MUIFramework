@@ -2,6 +2,7 @@ package com.tummosoft.MUI;
 
 import anywheresoftware.b4a.BA;
 import anywheresoftware.b4a.BA.ShortName;
+import anywheresoftware.b4a.objects.collections.*;
 
 @ShortName("HtmlForm")
 public class HtmlForm {
@@ -13,31 +14,31 @@ public class HtmlForm {
     public String className = "";
     public String Name = "";
     public String atrr = "";
+    public Map OverrideEvent;
        
     public void Initialize(String event, HtmlControls[] elements) {        
         _elements = elements;                
-        _event = event;
-        formEvent = new FormEvents(this);
+        _event = event;        
+        formEvent = new FormEvents(this, OverrideEvent);
+              
     }
-
-    public String getEventName() {
-        return _event;
-    }
-
+    
     public String getHTML() {
         String rs = "";
         String form = "";
+        String _id = id;
+        String _name = Name;
 
-        if (id != "") {
-            id = "id='" + id + "' ";
+        if (_id != "") {
+            _id = "id='" + _id + "' ";
         }
 
         if (className != "") {
             className = "class='" + className + "' ";
         }
         
-        if (Name != "") {
-            Name = "name='" + Name + "' ";
+        if (_name != "") {
+            _name = "name='" + _name + "' ";
         }
 
         if (action != "") {
@@ -45,16 +46,14 @@ public class HtmlForm {
         }
         
         atrr = atrr + " ";
-
-        String[] tem = formEvent.getHTML();
-
-        form = "<form " + id + action + className + Name + atrr + tem[0] + "> \n";
+        
+        form = "<form " + _id + action + className + _name + atrr + "> \n";
         form = form.trim();
         for (int i=0; i < _elements.length; i++) {
             HtmlControls ele = _elements[i];
             rs = rs + "\n" + ele.GetHTML() + "\n";
         }
-        rs = "\n" + form + rs + "</form> \n"  + tem[1];
+        rs = "\n" + form + rs + "</form> \n"  + formEvent.getHTML();
         
         return rs;
     }
